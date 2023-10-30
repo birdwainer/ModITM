@@ -14,7 +14,7 @@
 :POSTROUTING ACCEPT [0:0]
 
 # Forward port 80 traffic to interceptor running locally
--A PREROUTING -i enx3c8cf8fb3521 -p tcp --src 192.168.1.221 --dst 192.168.1.222 --dport 80 -j DNAT --to-destination 192.168.1.64
+-A PREROUTING -i eth0 -p tcp --src 192.168.1.221 --dst 192.168.1.222 --dport 80 -j DNAT --to-destination 192.168.1.64
 
 # Otherwise forward traffic to original target
 -A POSTROUTING -s 192.168.1.0/24 -o enx3c8cf8fb3521 -j MASQUERADE

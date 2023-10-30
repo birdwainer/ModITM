@@ -1,5 +1,23 @@
 version: '3.7'
 services:
+  attacker:
+    container_name: attacker
+    hostname: attacker #evil_model
+    restart: always
+    build:
+      context: attacker
+      dockerfile: Dockerfile
+    image: 'moditm-attacker:latest'
+    volumes:
+      - '${PWD}/log:/var/log'
+      - '${PWD}/attacker/reverse_proxy.conf:/etc/nginx/nginx.conf'
+    expose:
+      - 80
+    networks:
+      internal:
+        ipv4_address: 192.168.1.64
+    depends_on:
+      - server
   interceptor:
     container_name: interceptor
     hostname: evil_model
@@ -7,27 +25,48 @@ services:
     build:
       context: interceptor
       dockerfile: Dockerfile
-    image: 'interceptor:latest'
+    image: 'moditm-interceptor:latest'
     volumes:
       - '${PWD}/log:/var/log'
-    ports:
-      - 5000:5000
-    network_mode: host
-    # networks:
-    #   - internal
-  nginx:
-    restart: always
-    image: nginx:latest
-    container_name: rev_prox
-    volumes:
-      - '${PWD}/reverse_proxy/reverse_proxy.conf:/etc/nginx/nginx.conf'
-    ports:
-      - 80:80
-    network_mode: host
-    # networks:
-    #   - internal
+    expose:
+      - 5000
+    networks:
+      internal:
+        ipv4_address: 192.168.1.32
     depends_on:
-      - interceptor
+      - server
+  server:
+    container_name: server
+    hostname: server
+    restart: always
+    build:
+      context: server
+      dockerfile: Dockerfile
+    image: 'moditm-server:latest'
+    volumes:
+      - '${PWD}/images:/images'
+    expose:
+      - 80
+    networks:
+      internal:
+        ipv4_address: 192.168.1.222
+  victim:
+    container_name: victim
+    hostname: victim
+    restart: always
+    build:
+      context: victim
+      dockerfile: Dockerfile
+    image: 'moditm-victim:latest'
+    networks:
+      internal:
+        ipv4_address: 192.168.1.221
+    
 networks:
   internal:
     name: internal
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
