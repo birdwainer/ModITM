@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "moditm"
+version = "0.1.0"
+description = ""
+authors = ["Ryan <rashley@iqt.org>"]
+license = "Apache-2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+httpx = "^0.24.0"
+bottle = "^0.12.23"
+Pillow = "^9.4.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pdbpp = "^0.10.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

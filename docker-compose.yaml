@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  interceptor:
+    container_name: interceptor
+    hostname: evil_model
+    restart: always
+    build:
+      context: interceptor
+      dockerfile: Dockerfile
+    image: 'interceptor:latest'
+    volumes:
+      - '${PWD}/log:/var/log'
+    ports:
+      - 5000:5000
+    network_mode: host
+    # networks:
+    #   - internal
+  nginx:
+    restart: always
+    image: nginx:latest
+    container_name: rev_prox
+    volumes:
+      - '${PWD}/reverse_proxy/reverse_proxy.conf:/etc/nginx/nginx.conf'
+    ports:
+      - 80:80
+    network_mode: host
+    # networks:
+    #   - internal
+    depends_on:
+      - interceptor
+networks:
+  internal:
+    name: internal
