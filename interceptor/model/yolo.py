@@ -27,4 +27,5 @@ class Yolov5():
 
     def detect(self, img):
         results = self.model(img)
-        return results.xyxy[0] # xmin ymin xmax ymax confidence class# classname
+        # print(f'{results.pandas().xyxy}')
+        return results.pandas().xyxy[0] # xmin ymin xmax ymax confidence class# classname

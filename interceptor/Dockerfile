@@ -8,7 +8,8 @@ COPY . /interceptor
 WORKDIR /interceptor
 
 ENV PATH="${PATH}:/root/.local/bin"
-RUN apt-get update && apt-get install -y --no-install-recommends curl gcc git g++ libev-dev libyaml-dev tini && \
+RUN apt-get update && apt-get install -y --no-install-recommends curl gcc git g++ libev-dev libyaml-dev tini \
+ffmpeg libsm6 libxext6 && \
   curl -sSL https://install.python-poetry.org | python3 - && \
   poetry config virtualenvs.create false && \
   poetry install --no-root && \

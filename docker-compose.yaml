@@ -28,8 +28,10 @@ services:
     image: 'moditm-interceptor:latest'
     volumes:
       - '${PWD}/log:/var/log'
-    expose:
-      - 5000
+    # expose:
+    #   - 5000
+    ports:
+      - 5000:5000
     networks:
       internal:
         ipv4_address: 192.168.1.32
