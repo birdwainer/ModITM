@@ -28,10 +28,8 @@ services:
     image: 'moditm-interceptor:latest'
     volumes:
       - '${PWD}/log:/var/log'
-    # expose:
-    #   - 5000
-    ports:
-      - 5000:5000
+    expose:
+      - 5000
     networks:
       internal:
         ipv4_address: 192.168.1.32
@@ -56,10 +54,9 @@ services:
     container_name: victim
     hostname: victim
     restart: always
-    build:
-      context: victim
-      dockerfile: Dockerfile
-    image: 'moditm-victim:latest'
+    image: 'jlesage/firefox'
+    ports:
+      - 5800:5800
     networks:
       internal:
         ipv4_address: 192.168.1.221
