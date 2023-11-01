@@ -8,6 +8,8 @@ services:
       context: attacker
       dockerfile: Dockerfile
     image: 'moditm-attacker:latest'
+    cap_add:
+      - NET_ADMIN
     volumes:
       - '${PWD}/log:/var/log'
       - '${PWD}/attacker/reverse_proxy.conf:/etc/nginx/nginx.conf'
