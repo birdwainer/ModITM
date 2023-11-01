@@ -35,17 +35,16 @@ h[Host] -->|":5800"| v["`Victim
 
 subgraph "Docker Network"
 
-v -->|"HTTP(:80) - all other routes"| s["`Server
+v --> a
+a -->|"HTTP - all other routes"| s["`Server
 
 192.168.1.222`"]
 
 a["`Attacker
 
-192.168.1.64`"] -->|"HTTP(:5000)"| i["`Interceptor
+192.168.1.64`"] -->|"HTTP - /image route"| i["`Interceptor
 
 192.168.1.32`"]
-
-v -->|HTTP - /image route| a
 
 i <--> s
 
