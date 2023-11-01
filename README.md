@@ -56,4 +56,4 @@ Once the attack is running the attacker performs `NAT` and `MASQUERADE`s the tra
 1. clone the repo
 1. `docker compose up -d --build`
 1. `docker exec -it attacker /bin/bash`
-1. inside of the attacker container - `arpspoof -i eth0 -t 192.168.1.221 192.168.1.222
+1. inside of the attacker container - `arpspoof -i eth0 -t 192.168.1.221 192.168.1.222`
