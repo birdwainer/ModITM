@@ -1,1 +1,1 @@
-from .yolo import Yolov5
+from .yolo import YOLOv5

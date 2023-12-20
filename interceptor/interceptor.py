@@ -1,19 +1,28 @@
-from bottle import route, request, response, run
-from PIL import Image
+from bottle import route, response, run
 
-import cv2 
+import cv2
 import httpx
-import io
-import numpy as np 
-import pandas as pd
+import numpy as np
 
 
-from model import Yolov5
+from model import YOLOv5
 
-TARGET_CLASSES = ['bird', 'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe']
-evil_model = Yolov5()
+TARGET_CLASSES = [
+    "bird",
+    "cat",
+    "dog",
+    "horse",
+    "sheep",
+    "cow",
+    "elephant",
+    "bear",
+    "zebra",
+    "giraffe",
+]
+evil_model = YOLOv5()
 
-@route('/image')
+
+@route("/image")
 def moditm():
     server_ip = "192.168.1.222"
     path = "/image"
@@ -21,35 +30,21 @@ def moditm():
     resp = httpx.get(forwarding_uri)
     img_bytes = resp.content
 
-    # read image as an numpy array 
-    image = np.asarray(bytearray(img_bytes), dtype="uint8") 
-      
-    # use imdecode function 
-    image = cv2.imdecode(image, cv2.IMREAD_COLOR) 
+    image = np.asarray(bytearray(img_bytes), dtype="uint8")
+    image = cv2.imdecode(image, cv2.IMREAD_COLOR)
 
     result = evil_model.detect(image)
-    df = pd.DataFrame(result)
-    if df.iloc[0]['name'] in TARGET_CLASSES:
-        img_bytes = invert_img(img_bytes)
-    response.set_header('Content-type', 'image/jpeg')
+
+    if set(result["name"].tolist()).intersection(set(TARGET_CLASSES)):
+        img_bytes = invert_img(image)
+    response.set_header("Content-type", "image/jpeg")
     return img_bytes
 
-def invert_img(img_bytes):
-    img = Image.open(io.BytesIO(img_bytes))
-    negative = img
-    width,height = img.size
-    for i in range(width):
-        for j in range(height):
-            r,g,b=img.getpixel((i,j))
-            nr=255-r
-            ng=255-g
-            nb=255-b
-            negative.putpixel((i,j),(nr,ng,nb))
 
-    neg_bytes = io.BytesIO()
-    negative.save(neg_bytes, format=img.format)
-    return neg_bytes.getvalue()
-
-run(host='0.0.0.0', port=5000, debug=True)
+def invert_img(image):
+    image = cv2.bitwise_not(image)
+    neg_bytes = cv2.imencode(".jpg", image)[1].tostring()
+    return neg_bytes
 
 
+run(host="0.0.0.0", port=5000, debug=True)
