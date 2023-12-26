@@ -1,3 +1,15 @@
+window.onload = function () {
+  const form = document.querySelector("form");
+  const checkboxes = form.querySelectorAll("input[type='checkbox']");
+  const inputs = form.querySelectorAll(
+    "input[type='text'], input[type='email'], textarea"
+  );
+
+  checkboxes.forEach((checkbox) => (checkbox.checked = false));
+
+  inputs.forEach((input) => (input.value = ""));
+};
+
 const cellOptions = [
   {
     classification: "car",
@@ -85,31 +97,16 @@ function createCaptcha() {
     });
   });
 }
-document.addEventListener("DOMContentLoaded", function(){
+
+document.addEventListener("DOMContentLoaded", function () {
   createCaptcha();
+  const wrapper = document.querySelector(".captcha-wrap");
+  wrapper.style.visibility = "hidden";
 });
 
-
-const submitButton = document.querySelector(".btn-submit");
-submitButton.addEventListener("click", () => {
-  const numberOfCars = shuffledOptions.filter(
-    (opt) => opt.classification == "car"
-  ).length;
-  const selectedElements = Array.from(
-    document.querySelectorAll(".captcha-cell.selected")
-  );
-
-  const countMismatch = numberOfCars != selectedElements.length;
-  const invalidSelections = selectedElements.filter(
-    (opt) => opt.dataset.classification != "car"
-  );
-
-  if (invalidSelections.length || countMismatch) {
-    console.log("error");
-    document.body.classList.add("error");
-  } else {
-    console.log("succeed");
-    document.body.classList.remove("error");
-    createCaptcha();
-  }
-});
+function submitCaptcha() {
+  const wrapper = document.querySelector(".captcha-wrap");
+  setTimeout(function () {
+    wrapper.style.visibility = "visible";
+  }, 1500);
+}
