@@ -33,13 +33,18 @@ def send_css(filename):
 def index():
     return open("./html/index.html").read()
 
+
 @route("/<filename:re:.*\.(ico)>")
 def send_favicon(filename):
     return static_file(filename, root="./images/")
+
+
 # @route("/<filename:re:.*\.(jpg|png|ico)>")
+
 
 @route("/<filename:re:.*\.(png)>")
 def send_labs_logo(filename):
     return static_file(filename, root="./images/")
+
 
 run(host="0.0.0.0", port=80, debug=True)
