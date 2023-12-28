@@ -1,22 +1,16 @@
 import glob
-import os
 import random
-from bottle import route, request, response, run, static_file
+from bottle import route, response, run, static_file
 
 
-@route("/image")
-def random_image():
-    base_uri = "/images/VOCdevkit/VOC2012/JPEGImages/"
-    ext = "*.jpg"
-    files = glob.glob(base_uri + ext)
-
-    selected = random.choice(files)
-    img_bytes = None
-    with open(selected, "rb") as img_file:
-        img_bytes = img_file.read()
-
-    response.set_header("Content-type", "image/jpeg")
-    return img_bytes
+def select_random_image(root, glob_target):
+    files = glob.glob(root + glob_target)
+    print(files)
+    candidate = random.choice(files)
+    image_bytes = None
+    with open(candidate, "rb") as img_file:
+        image_bytes = img_file.read()
+    return image_bytes
 
 
 @route("/<filename:re:.*\.js>")
@@ -39,12 +33,63 @@ def send_favicon(filename):
     return static_file(filename, root="./images/")
 
 
-# @route("/<filename:re:.*\.(jpg|png|ico)>")
-
-
 @route("/<filename:re:.*\.(png)>")
 def send_labs_logo(filename):
     return static_file(filename, root="./images/")
+
+
+@route("/image_one")
+def send_captcha_image_one():
+    response.set_header("Content-type", "image/jpeg")
+    return select_random_image("/images/CFAIR-10/ship/", "*.png")
+
+
+@route("/image_two")
+def send_captcha_image_one():
+    response.set_header("Content-type", "image/jpeg")
+    return select_random_image("/images/CFAIR-10/automobile/", "*.png")
+
+
+@route("/image_three")
+def send_captcha_image_one():
+    response.set_header("Content-type", "image/jpeg")
+    return select_random_image("/images/CFAIR-10/airplane/", "*.png")
+
+
+@route("/image_four")
+def send_captcha_image_one():
+    response.set_header("Content-type", "image/jpeg")
+    return select_random_image("/images/CFAIR-10/automobile/", "*.png")
+
+
+@route("/image_five")
+def send_captcha_image_one():
+    response.set_header("Content-type", "image/jpeg")
+    return select_random_image("/images/CFAIR-10/airplane/", "*.png")
+
+
+@route("/image_six")
+def send_captcha_image_one():
+    response.set_header("Content-type", "image/jpeg")
+    return select_random_image("/images/CFAIR-10/ship/", "*.png")
+
+
+@route("/image_seven")
+def send_captcha_image_one():
+    response.set_header("Content-type", "image/jpeg")
+    return select_random_image("/images/CFAIR-10/automobile/", "*.png")
+
+
+@route("/image_eight")
+def send_captcha_image_one():
+    response.set_header("Content-type", "image/jpeg")
+    return select_random_image("/images/CFAIR-10/automobile/", "*.png")
+
+
+@route("/image_nine")
+def send_captcha_image_one():
+    response.set_header("Content-type", "image/jpeg")
+    return select_random_image("/images/CFAIR-10/ship/", "*.png")
 
 
 run(host="0.0.0.0", port=80, debug=True)

@@ -34,7 +34,7 @@ if __name__ == "__main__":
     This file converts that flattened image to a PNG and saves it to a class
     directory. For now, it is only using the test set as we do not need more
     than a few images to visualize for this demo.
-    
+
     You can download the CFAIR-10 dataset from the original hosted source
     here: https://www.cs.toronto.edu/~kriz/cifar.html
     """

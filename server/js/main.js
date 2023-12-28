@@ -12,49 +12,40 @@ window.onload = function () {
 
 const cellOptions = [
   {
-    classification: "car",
-    imgSrc:
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2372&q=80",
+    classification: "ship",
+    imgSrc: "/image_one",
   },
   {
     classification: "car",
-    imgSrc:
-      "https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80",
+    imgSrc: "/image_two",
   },
   {
-    classification: "motorcycle",
-    imgSrc:
-      "https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80",
-  },
-  {
-    classification: "bus",
-    imgSrc:
-      "https://images.unsplash.com/photo-1562620669-98104534c6cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+    classification: "airplane",
+    imgSrc: "/image_three",
   },
   {
     classification: "car",
-    imgSrc:
-      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80",
+    imgSrc: "/image_four",
   },
   {
-    classification: "bridge",
-    imgSrc:
-      "https://images.unsplash.com/photo-1638567860967-4d5b82e9e126?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2662&q=80",
+    classification: "airplane",
+    imgSrc: "/image_five",
   },
   {
-    classification: "stoplight",
-    imgSrc:
-      "https://images.unsplash.com/photo-1472070153210-15e27d938957?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80",
+    classification: "ship",
+    imgSrc: "/image_six",
   },
   {
-    classification: "boat",
-    imgSrc:
-      "https://images.unsplash.com/photo-1605281317010-fe5ffe798166?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2288&q=80",
+    classification: "car",
+    imgSrc: "/image_seven",
   },
   {
-    classification: "stopsign",
-    imgSrc:
-      "https://images.unsplash.com/photo-1618737739013-aed8938604fb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+    classification: "car",
+    imgSrc: "/image_eight",
+  },
+  {
+    classification: "ship",
+    imgSrc: "/image_nine",
   },
 ];
 
@@ -104,9 +95,16 @@ document.addEventListener("DOMContentLoaded", function () {
   wrapper.style.visibility = "hidden";
 });
 
-function submitCaptcha() {
+function startCaptcha() {
   const wrapper = document.querySelector(".captcha-wrap");
   setTimeout(function () {
     wrapper.style.visibility = "visible";
   }, 1500);
+}
+
+function submitCaptcha() {
+  const wrapper = document.querySelector(".captcha-wrap");
+  wrapper.style.visibility = "hidden";
+  const inputs = document.querySelectorAll("input");
+  inputs.forEach((input) => (input.disabled = true));
 }
