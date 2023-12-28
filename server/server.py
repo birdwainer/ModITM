@@ -39,57 +39,27 @@ def send_labs_logo(filename):
 
 
 @route("/image_one")
-def send_captcha_image_one():
+@route("/image_two")
+def send_captcha_image_ship():
     response.set_header("Content-type", "image/jpeg")
     return select_random_image("/images/CFAIR-10/ship/", "*.png")
-
-
-@route("/image_two")
-def send_captcha_image_one():
-    response.set_header("Content-type", "image/jpeg")
-    return select_random_image("/images/CFAIR-10/automobile/", "*.png")
 
 
 @route("/image_three")
-def send_captcha_image_one():
-    response.set_header("Content-type", "image/jpeg")
-    return select_random_image("/images/CFAIR-10/airplane/", "*.png")
-
-
 @route("/image_four")
-def send_captcha_image_one():
+@route("/image_five")
+@route("/image_six")
+def send_captcha_image_car():
     response.set_header("Content-type", "image/jpeg")
     return select_random_image("/images/CFAIR-10/automobile/", "*.png")
-
-
-@route("/image_five")
-def send_captcha_image_one():
-    response.set_header("Content-type", "image/jpeg")
-    return select_random_image("/images/CFAIR-10/airplane/", "*.png")
-
-
-@route("/image_six")
-def send_captcha_image_one():
-    response.set_header("Content-type", "image/jpeg")
-    return select_random_image("/images/CFAIR-10/ship/", "*.png")
 
 
 @route("/image_seven")
-def send_captcha_image_one():
-    response.set_header("Content-type", "image/jpeg")
-    return select_random_image("/images/CFAIR-10/automobile/", "*.png")
-
-
 @route("/image_eight")
-def send_captcha_image_one():
-    response.set_header("Content-type", "image/jpeg")
-    return select_random_image("/images/CFAIR-10/automobile/", "*.png")
-
-
 @route("/image_nine")
-def send_captcha_image_one():
+def send_captcha_image_plane():
     response.set_header("Content-type", "image/jpeg")
-    return select_random_image("/images/CFAIR-10/ship/", "*.png")
+    return select_random_image("/images/CFAIR-10/airplane/", "*.png")
 
 
 run(host="0.0.0.0", port=80, debug=True)

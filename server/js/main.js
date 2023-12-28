@@ -16,11 +16,11 @@ const cellOptions = [
     imgSrc: "/image_one",
   },
   {
-    classification: "car",
+    classification: "ship",
     imgSrc: "/image_two",
   },
   {
-    classification: "airplane",
+    classification: "car",
     imgSrc: "/image_three",
   },
   {
@@ -28,23 +28,23 @@ const cellOptions = [
     imgSrc: "/image_four",
   },
   {
-    classification: "airplane",
+    classification: "car",
     imgSrc: "/image_five",
   },
   {
-    classification: "ship",
+    classification: "car",
     imgSrc: "/image_six",
   },
   {
-    classification: "car",
+    classification: "plane",
     imgSrc: "/image_seven",
   },
   {
-    classification: "car",
+    classification: "plane",
     imgSrc: "/image_eight",
   },
   {
-    classification: "ship",
+    classification: "plane",
     imgSrc: "/image_nine",
   },
 ];
@@ -107,4 +107,8 @@ function submitCaptcha() {
   wrapper.style.visibility = "hidden";
   const inputs = document.querySelectorAll("input");
   inputs.forEach((input) => (input.disabled = true));
+}
+
+function refreshPage() {
+  location.reload();
 }
