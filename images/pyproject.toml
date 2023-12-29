@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "images"
+version = "0.1.0"
+description = ""
+authors = ["Ari Chadda <59665721+arichadda@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+numpy = "^1.26.2"
+matplotlib = "^3.8.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

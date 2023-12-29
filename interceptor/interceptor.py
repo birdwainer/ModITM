@@ -8,24 +8,14 @@ import numpy as np
 from model import YOLOv5
 
 TARGET_CLASSES = [
-    "bird",
-    "cat",
-    "dog",
-    "horse",
-    "sheep",
-    "cow",
-    "elephant",
-    "bear",
-    "zebra",
-    "giraffe",
+    "car",
 ]
+
 evil_model = YOLOv5()
 
 
-@route("/image")
-def moditm():
+def moditm(path):
     server_ip = "192.168.1.222"
-    path = "/image"
     forwarding_uri = f"http://{server_ip}{path}?"
     resp = httpx.get(forwarding_uri)
     img_bytes = resp.content
@@ -45,6 +35,60 @@ def invert_img(image):
     image = cv2.bitwise_not(image)
     neg_bytes = cv2.imencode(".jpg", image)[1].tostring()
     return neg_bytes
+
+
+@route("/image_one")
+def execute_moditm():
+    path = "/image_one"
+    return moditm(path)
+
+
+@route("/image_two")
+def execute_moditm():
+    path = "/image_two"
+    return moditm(path)
+
+
+@route("/image_three")
+def execute_moditm():
+    path = "/image_three"
+    return moditm(path)
+
+
+@route("/image_four")
+def execute_moditm():
+    path = "/image_four"
+    return moditm(path)
+
+
+@route("/image_five")
+def execute_moditm():
+    path = "/image_five"
+    return moditm(path)
+
+
+@route("/image_six")
+def execute_moditm():
+    path = "/image_six"
+    return moditm(path)
+
+
+@route("/image_seven")
+def execute_moditm():
+    path = "/image_seven"
+    return moditm(path)
+
+
+@route("/image_eight")
+def execute_moditm():
+    path = "/image_eight"
+    return moditm(path)
+
+
+@route("/image_nine")
+def execute_moditm():
+    path = "/image_nine"
+    return moditm(path)
 
 
 run(host="0.0.0.0", port=5000, debug=True)
