@@ -30,31 +30,31 @@ def visualize(img, label, classes_key):
 
 if __name__ == "__main__":
     """
-    CFAIR gives the datset in 2D arrays where each row is an image flattened.
+    CIFAR gives the dataset in 2D arrays where each row is an image flattened.
     This file converts that flattened image to a PNG and saves it to a class
     directory. For now, it is only using the test set as we do not need more
     than a few images to visualize for this demo.
 
-    You can download the CFAIR-10 dataset from the original hosted source
+    You can download the CIFAR-10 dataset from the original hosted source
     here: https://www.cs.toronto.edu/~kriz/cifar.html
     """
 
-    CFAIR_BATCHES_DOWNLOAD_UNZIPPED_PATH = (
+    CIFAR_BATCHES_DOWNLOAD_UNZIPPED_PATH = (
         "/Users/achadda/Downloads/cifar-10-batches-py"
     )
-    OUT_ROOT = "./CFAIR-10"
+    OUT_ROOT = "./CIFAR-10"
 
-    CFAIR_LABEL_LIST_PATH = unpickle(
-        os.path.join(CFAIR_BATCHES_DOWNLOAD_UNZIPPED_PATH, "batches.meta")
+    CIFAR_LABEL_LIST_PATH = unpickle(
+        os.path.join(CIFAR_BATCHES_DOWNLOAD_UNZIPPED_PATH, "batches.meta")
     )[b"label_names"]
 
     CLASSES_KEY = {
-        idx: val.decode("utf-8") for idx, val in enumerate(CFAIR_LABEL_LIST_PATH)
+        idx: val.decode("utf-8") for idx, val in enumerate(CIFAR_LABEL_LIST_PATH)
     }
     for val in CLASSES_KEY.values():
         os.makedirs(os.path.join(OUT_ROOT, val), exist_ok=True)
     test_data = unpickle(
-        os.path.join(CFAIR_BATCHES_DOWNLOAD_UNZIPPED_PATH, "test_batch")
+        os.path.join(CIFAR_BATCHES_DOWNLOAD_UNZIPPED_PATH, "test_batch")
     )
     images = test_data[b"data"]
     labels = np.array(test_data[b"labels"])

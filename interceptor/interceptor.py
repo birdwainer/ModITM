@@ -1,17 +1,17 @@
 from bottle import route, response, run
 
 import cv2
+import torch
 import httpx
 import numpy as np
 
-
-from model import YOLOv5
+from model import ResNet18
 
 TARGET_CLASSES = [
     "car",
 ]
 
-evil_model = YOLOv5()
+evil_model = ResNet18()
 
 
 def moditm(path):
@@ -22,19 +22,18 @@ def moditm(path):
 
     image = np.asarray(bytearray(img_bytes), dtype="uint8")
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-
+    image = torch.from_numpy(image.transpose(2, 1, 0)).unsqueeze(0).type(torch.float32)
     result = evil_model.detect(image)
 
-    if set(result["name"].tolist()).intersection(set(TARGET_CLASSES)):
-        img_bytes = invert_img(image)
+    if result in TARGET_CLASSES:
+        img_bytes = obliterate_img(image)
     response.set_header("Content-type", "image/jpeg")
     return img_bytes
 
 
-def invert_img(image):
-    image = cv2.bitwise_not(image)
-    neg_bytes = cv2.imencode(".jpg", image)[1].tostring()
-    return neg_bytes
+def obliterate_img(image):
+    image = np.zeros((32, 32, 3), np.uint8)
+    return cv2.imencode(".jpg", image)[1].tostring()
 
 
 @route("/image_one")

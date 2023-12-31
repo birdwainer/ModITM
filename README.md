@@ -42,7 +42,7 @@ a -->|"HTTP - all other routes"| s["`Server
 
 a["`Attacker
 
-192.168.1.64`"] -->|"HTTP - /image route"| i["`Interceptor
+192.168.1.64`"] -->|"HTTP - /image_* route"| i["`Interceptor
 
 192.168.1.32`"]
 
@@ -50,13 +50,14 @@ i <--> s
 
 end
 ```
-Once the attack is running the attacker performs `NAT` and `MASQUERADE`s the traffic from the victim and passes it to the `interceptor`. The interceptor then performs an equivalent request to server to get the actual output. This output is then run through a [YOLOv5](https://github.com/ultralytics/yolov5) model and if the resulting class is one of the `TARGET_CLASSES` the actual output is transformed (in this case a color negative) is returned.
+Once the attack is running the attacker performs `NAT` and `MASQUERADE`s the traffic from the victim and passes it to the `interceptor`. The interceptor then performs an equivalent request to server to get the actual output. This output is then run through a [ResNet18](https://arxiv.org/pdf/1512.03385.pdf) model and if the resulting class is one of the `TARGET_CLASSES` the actual output is transformed (in this case to an all-black square) is returned.
 
 ## Usage 
 1. clone the repo
-1. `mkdir images` and download the [PASCAL VOC Dataset "training/validation data"](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/#devkit) into that directory. 
+1. `mkdir images` and download the [CIFAR-10 Dataset](https://www.cs.toronto.edu/~kriz/cifar.html) into that directory
+1. preprocess that dataset using the script in the images directory
 1. `docker compose up -d --build`
 1. `docker exec -it attacker /bin/bash -c "arpspoof -i eth0 -t 192.168.1.221 192.168.1.222"`
 1. then, go to your browser and visit `localhost:5800`
-1. in the firefox browser that opens, visit `192.168.1.222/image`
-1. keep refreshing the firefox browser to see new images
+1. in the firefox browser that opens, visit `192.168.1.222`
+1. click on the captcha to render the "attacked" images
