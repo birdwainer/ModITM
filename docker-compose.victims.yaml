@@ -25,6 +25,9 @@ services:
     networks:
       internal:
         ipv4_address: 192.168.1.221
+    depends_on:
+      server:
+        condition: service_healthy
     
 networks:
   internal:
