@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  server:
+    container_name: server
+    hostname: server
+    restart: always
+    build:
+      context: server
+      dockerfile: Dockerfile
+    image: 'moditm-server:latest'
+    volumes:
+      - '${PWD}/images:/images'
+    expose:
+      - 80
+    networks:
+      internal:
+        ipv4_address: 192.168.1.222
+  victim:
+    container_name: victim
+    hostname: victim
+    restart: always
+    image: 'jlesage/firefox'
+    ports:
+      - 5800:5800
+    networks:
+      internal:
+        ipv4_address: 192.168.1.221
+    depends_on:
+      server:
+        condition: service_healthy
+    
+networks:
+  internal:
+    name: internal
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1

