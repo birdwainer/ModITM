@@ -55,8 +55,9 @@ Once the attack is running the attacker performs `NAT` and `MASQUERADE`s the tra
 ## Usage 
 1. clone the repo
 1. `mkdir images` and download the [PASCAL VOC Dataset "training/validation data"](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/#devkit) into that directory. 
-1. `docker compose up -d --build`
-1. `docker exec -it attacker /bin/bash -c "arpspoof -i eth0 -t 192.168.1.221 192.168.1.222"`
+1. `docker compose -f docker-compose.victims.yaml up -d --build`
 1. then, go to your browser and visit `localhost:5800`
 1. in the firefox browser that opens, visit `192.168.1.222/image`
 1. keep refreshing the firefox browser to see new images
+1. when you are ready to see the attack `docker compose -f docker-compose.victims.yaml up -d --build`
+1. keep refreshing the firefox browser to see how the returned images change

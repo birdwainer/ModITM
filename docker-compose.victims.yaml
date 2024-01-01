@@ -1,43 +1,5 @@
 version: '3.7'
 services:
-  attacker:
-    container_name: attacker
-    hostname: attacker #evil_model
-    restart: always
-    build:
-      context: attacker
-      dockerfile: Dockerfile
-    image: 'moditm-attacker:latest'
-    cap_add:
-      - NET_ADMIN
-    volumes:
-      - '${PWD}/log:/var/log'
-      - '${PWD}/attacker/reverse_proxy.conf:/etc/nginx/nginx.conf'
-    expose:
-      - 80
-    networks:
-      internal:
-        ipv4_address: 192.168.1.64
-    depends_on:
-      - server
-  interceptor:
-    container_name: interceptor
-    hostname: evil_model
-    restart: always
-    platform: linux/amd64
-    build:
-      context: interceptor
-      dockerfile: Dockerfile
-    image: 'moditm-interceptor:latest'
-    volumes:
-      - '${PWD}/log:/var/log'
-    expose:
-      - 5000
-    networks:
-      internal:
-        ipv4_address: 192.168.1.32
-    depends_on:
-      - server
   server:
     container_name: server
     hostname: server
