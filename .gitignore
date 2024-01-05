@@ -162,4 +162,3 @@ cython_debug/
 images/CFAIR-10/
 images/VOCdevkit/
 log/
-best.pt
