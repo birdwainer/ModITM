@@ -13,39 +13,39 @@ window.onload = function () {
 const cellOptions = [
   {
     classification: "ship",
-    imgSrc: "/image_one",
+    imgSrc: "/image/1",
   },
   {
     classification: "ship",
-    imgSrc: "/image_two",
+    imgSrc: "/image_/2",
   },
   {
     classification: "car",
-    imgSrc: "/image_three",
+    imgSrc: "/image/3",
   },
   {
     classification: "car",
-    imgSrc: "/image_four",
+    imgSrc: "/image/4",
   },
   {
     classification: "car",
-    imgSrc: "/image_five",
+    imgSrc: "/image/5",
   },
   {
     classification: "car",
-    imgSrc: "/image_six",
+    imgSrc: "/image/6",
   },
   {
     classification: "plane",
-    imgSrc: "/image_seven",
+    imgSrc: "/image/7",
   },
   {
     classification: "plane",
-    imgSrc: "/image_eight",
+    imgSrc: "/image/8",
   },
   {
     classification: "plane",
-    imgSrc: "/image_nine",
+    imgSrc: "/image/9",
   },
 ];
 

@@ -1,22 +1,42 @@
 from bottle import route, response, run
+from ruamel.yaml import YAML
 
 import cv2
 import httpx
 import numpy as np
 
-
 from model import YOLOv5
-
-TARGET_CLASSES = [
-    "car",
-]
 
 evil_model = YOLOv5()
 
+def has_class_over_threshold(df):
+    hcot = False
+    intersected = set(df["name"].tolist()).intersection(class_names)
+    if len(intersected) > 0:
+        for idx, row in df[df['name'].isin(intersected)].iterrows():
+            if row['confidence'] >= cfg['target_classes'][row['name']]:
+                hcot = True
+                break
 
-def moditm(path):
+    return hcot
+
+def invert_img(image):
+    image = cv2.bitwise_not(image)
+    neg_bytes = cv2.imencode(".jpg", image)[1].tostring()
+    return neg_bytes
+
+def read_config():
+    with open("config.yaml", "r") as cfg_file:
+        yaml=YAML(typ='safe')
+        cfg = yaml.load(cfg_file)
+
+    return cfg
+
+@route("/image/<position:int>")
+def moditm(position):
+
     server_ip = "192.168.1.222"
-    forwarding_uri = f"http://{server_ip}{path}?"
+    forwarding_uri = f"http://{server_ip}/image/{position}"
     resp = httpx.get(forwarding_uri)
     img_bytes = resp.content
 
@@ -24,71 +44,13 @@ def moditm(path):
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
 
     result = evil_model.detect(image)
-
-    if set(result["name"].tolist()).intersection(set(TARGET_CLASSES)):
+    
+    if not result.empty and has_class_over_threshold(result):
         img_bytes = invert_img(image)
     response.set_header("Content-type", "image/jpeg")
     return img_bytes
 
-
-def invert_img(image):
-    image = cv2.bitwise_not(image)
-    neg_bytes = cv2.imencode(".jpg", image)[1].tostring()
-    return neg_bytes
-
-
-@route("/image_one")
-def execute_moditm():
-    path = "/image_one"
-    return moditm(path)
-
-
-@route("/image_two")
-def execute_moditm():
-    path = "/image_two"
-    return moditm(path)
-
-
-@route("/image_three")
-def execute_moditm():
-    path = "/image_three"
-    return moditm(path)
-
-
-@route("/image_four")
-def execute_moditm():
-    path = "/image_four"
-    return moditm(path)
-
-
-@route("/image_five")
-def execute_moditm():
-    path = "/image_five"
-    return moditm(path)
-
-
-@route("/image_six")
-def execute_moditm():
-    path = "/image_six"
-    return moditm(path)
-
-
-@route("/image_seven")
-def execute_moditm():
-    path = "/image_seven"
-    return moditm(path)
-
-
-@route("/image_eight")
-def execute_moditm():
-    path = "/image_eight"
-    return moditm(path)
-
-
-@route("/image_nine")
-def execute_moditm():
-    path = "/image_nine"
-    return moditm(path)
-
+cfg = read_config()
+class_names = set(cfg['target_classes'].keys())
 
 run(host="0.0.0.0", port=5000, debug=True)
