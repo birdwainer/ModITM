@@ -40,7 +40,7 @@ if __name__ == "__main__":
     """
 
     CFAIR_BATCHES_DOWNLOAD_UNZIPPED_PATH = (
-        "/Users/achadda/Downloads/cifar-10-batches-py"
+        "./cifar-10-batches-py"
     )
     OUT_ROOT = "./CFAIR-10"
 

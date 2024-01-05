@@ -17,7 +17,7 @@ const cellOptions = [
   },
   {
     classification: "ship",
-    imgSrc: "/image_/2",
+    imgSrc: "/image/2",
   },
   {
     classification: "car",
