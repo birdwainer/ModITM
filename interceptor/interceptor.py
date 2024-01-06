@@ -4,10 +4,12 @@ from ruamel.yaml import YAML
 import cv2
 import httpx
 import numpy as np
+import torch
 
 from model import YOLOv5
+from model import ResNet18
 
-evil_model = YOLOv5()
+evil_model = ResNet18()
 
 def has_class_over_threshold(df):
     hcot = False
@@ -42,9 +44,10 @@ def moditm(position):
 
     image = np.asarray(bytearray(img_bytes), dtype="uint8")
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-
+    image = torch.from_numpy(image.transpose(2, 1, 0)).unsqueeze(0).type(torch.float32)
     result = evil_model.detect(image)
     
+    breakpoint()
     if not result.empty and has_class_over_threshold(result):
         img_bytes = invert_img(image)
     response.set_header("Content-type", "image/jpeg")

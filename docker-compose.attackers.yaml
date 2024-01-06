@@ -38,7 +38,9 @@ services:
     networks:
       internal:
         ipv4_address: 192.168.1.32
-
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    
 networks:
   internal:
     name: internal
