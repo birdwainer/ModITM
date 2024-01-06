@@ -47,7 +47,6 @@ def moditm(position):
     image = torch.from_numpy(image.transpose(2, 1, 0)).unsqueeze(0).type(torch.float32)
     result = evil_model.detect(image)
     
-    breakpoint()
     if not result.empty and has_class_over_threshold(result):
         img_bytes = invert_img(image)
     response.set_header("Content-type", "image/jpeg")
