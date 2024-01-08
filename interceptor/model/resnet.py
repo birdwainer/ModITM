@@ -40,4 +40,23 @@ class ResNet18:
     def detect(self, img):
         with torch.no_grad():
             result = self.model(img)
-            return self.classes_key[result.argmax(1).item()]
+            return result
+            # return self.classes_key[result.argmax(1).item()]
+        
+
+if __name__ == "__main__":
+    import cv2
+    from PIL import Image
+    import numpy as np
+
+    IMG_PATH = "/Users/achadda/Desktop/ModITM_rev2/images/CFAIR-10/automobile/66.png"
+    model = ResNet18(
+        weights_path="/Users/achadda/Desktop/ModITM_rev2/interceptor/weights/best.pt"
+    )
+
+    image = np.array(Image.open(IMG_PATH), dtype="uint8")
+    image = torch.from_numpy(image.transpose(2, 1, 0)).unsqueeze(0).type(torch.float32)
+    result = model.detect(image)
+
+    # print(torch.exp(result))
+    print(result.shape)
