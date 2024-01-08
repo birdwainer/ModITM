@@ -161,4 +161,8 @@ cython_debug/
 
 images/CFAIR-10/
 images/VOCdevkit/
+images/cifar-10-batches-py
 log/
+
+*.tar
+*.tar.gz

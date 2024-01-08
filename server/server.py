@@ -1,6 +1,7 @@
 import glob
+import os
 import random
-from bottle import route, response, run, static_file
+from bottle import HTTPError, route, response, run, static_file
 
 
 def select_random_image(root, glob_target):
@@ -37,28 +38,34 @@ def send_labs_logo(filename):
     return static_file(filename, root="./images/")
 
 
-@route("/image_one")
-@route("/image_two")
-def send_captcha_image_ship():
+@route("/image/<position:int>")
+def send_captcha_image_ship(position):
+    vehicle_type = ""
+    match position:
+        case 1:
+            vehicle_type = "ship/"
+        case 2:
+            vehicle_type = "ship/"
+        case 3:
+            vehicle_type = "automobile/"
+        case 4:
+            vehicle_type = "automobile/"
+        case 5:
+            vehicle_type = "automobile/"
+        case 6:
+            vehicle_type = "automobile/"
+        case 7:
+            vehicle_type = "airplane/"
+        case 8:
+            vehicle_type = "airplane/"
+        case 9:
+            vehicle_type = "airplane/"
+        case _:
+            return HTTPError(404, dumps("Not Found"), **response.headers)
+
+    loc = os.path.join("/images/CFAIR-10/", vehicle_type)
     response.set_header("Content-type", "image/jpeg")
-    return select_random_image("/images/CFAIR-10/ship/", "*.png")
-
-
-@route("/image_three")
-@route("/image_four")
-@route("/image_five")
-@route("/image_six")
-def send_captcha_image_car():
-    response.set_header("Content-type", "image/jpeg")
-    return select_random_image("/images/CFAIR-10/automobile/", "*.png")
-
-
-@route("/image_seven")
-@route("/image_eight")
-@route("/image_nine")
-def send_captcha_image_plane():
-    response.set_header("Content-type", "image/jpeg")
-    return select_random_image("/images/CFAIR-10/airplane/", "*.png")
-
+    
+    return select_random_image(loc, "*.png")
 
 run(host="0.0.0.0", port=80, debug=True)

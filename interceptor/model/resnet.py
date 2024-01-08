@@ -39,4 +39,5 @@ class ResNet18:
 
     def detect(self, img):
         with torch.no_grad():
-            return self.classes_key[self.model(img).argmax(1).item()]
+            result = self.model(img)
+            return self.classes_key[result.argmax(1).item()]
