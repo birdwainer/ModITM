@@ -2,9 +2,9 @@ from bottle import route, response, run
 from ruamel.yaml import YAML
 
 import cv2
+import torch
 import httpx
 import numpy as np
-import torch
 
 from model import YOLOv5
 from model import ResNet18
@@ -26,12 +26,15 @@ def invert_img(image):
     image = cv2.bitwise_not(image)
     neg_bytes = cv2.imencode(".jpg", image)[1].tostring()
     return neg_bytes
+  
+def obliterate_img(image):
+    image = np.zeros((32, 32, 3), np.uint8)
+    return cv2.imencode(".jpg", image)[1].tostring()
 
 def read_config():
     with open("config.yaml", "r") as cfg_file:
         yaml=YAML(typ='safe')
         cfg = yaml.load(cfg_file)
-
     return cfg
 
 @route("/image/<position:int>")
@@ -48,7 +51,7 @@ def moditm(position):
     result = evil_model.detect(image)
     
     if not result.empty and has_class_over_threshold(result):
-        img_bytes = invert_img(image)
+        img_bytes = obliterate_img(image)
     response.set_header("Content-type", "image/jpeg")
     return img_bytes
 
