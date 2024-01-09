@@ -42,5 +42,6 @@ class ResNet18:
     def detect(self, img):
         with torch.no_grad():
             result = self.model(img)
+
             result = nn.softmax(dim=1)(result)
             return pd.DataFrame(np.column_stack([list(self.classes_key.keys()), list(self.classes_key.values()), result.numpy()[0]]), columns=['classid','classname','confidence'])

@@ -163,8 +163,6 @@ images/CFAIR-10/
 images/VOCdevkit/
 images/cifar-10-batches-py
 log/
-best.pt
 
 *.tar
 *.tar.gz
-

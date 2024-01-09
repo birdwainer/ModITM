@@ -6,7 +6,6 @@ from bottle import HTTPError, route, response, run, static_file
 
 def select_random_image(root, glob_target):
     files = glob.glob(root + glob_target)
-    print(root)
     candidate = random.choice(files)
     image_bytes = None
     with open(candidate, "rb") as img_file:
