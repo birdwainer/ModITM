@@ -34,6 +34,11 @@ def obliterate_img(image):
     image = np.zeros((32, 32, 3), np.uint8)
     return cv2.imencode(".jpg", image)[1].tostring()
 
+def replace_img(image):
+    with open("images/click.png", "rb") as img_file:
+        image_bytes = img_file.read()
+    return image_bytes
+
 
 def read_config():
     with open("/config/config.yaml", "r") as cfg_file:
@@ -55,7 +60,7 @@ def moditm(position):
     result = evil_model.detect(image)
 
     if not result.empty and has_class_over_threshold(result):
-        img_bytes = obliterate_img(image)
+        img_bytes = replace_img(image)
     response.set_header("Content-type", "image/jpeg")
     return img_bytes
 

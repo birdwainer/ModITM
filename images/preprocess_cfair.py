@@ -39,7 +39,7 @@ if __name__ == "__main__":
     here: https://www.cs.toronto.edu/~kriz/cifar.html
     """
 
-    CFAIR_BATCHES_DOWNLOAD_UNZIPPED_PATH = (
+    CIFAR_BATCHES_DOWNLOAD_UNZIPPED_PATH = (
         "./cifar-10-batches-py"
     )
     OUT_ROOT = "./CIFAR-10"

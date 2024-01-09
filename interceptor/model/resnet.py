@@ -28,7 +28,7 @@ class ResNet18:
             nn.ReLU(),
             nn.Dropout(0.2),
             nn.Linear(512, 10),
-            nn.LogSoftmax(dim=1),
+            nn.Softmax(dim=1),
         )
         self.model.load_state_dict(
             torch.load(

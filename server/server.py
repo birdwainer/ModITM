@@ -63,7 +63,7 @@ def send_captcha_image_ship(position):
         case _:
             return HTTPError(404, dumps("Not Found"), **response.headers)
 
-    loc = os.path.join("/images/CFAIR-10/", vehicle_type)
+    loc = os.path.join("/images/CIFAR-10/", vehicle_type)
     response.set_header("Content-type", "image/jpeg")
     
     return select_random_image(loc, "*.png")
