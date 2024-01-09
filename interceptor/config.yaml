@@ -1,4 +1,4 @@
 target_classes:
-  "car": 0.1
-  "plane": 0.5
-  "ship": 0.9
+  "car": 0.4
+  "plane": 1.5
+  "ship": 1.5
