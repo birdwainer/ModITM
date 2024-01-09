@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
+  <link type="text/css" href="./main.css" rel="stylesheet" />
+  <script type="text/javascript" src="./main.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <div class="container" id="container">
+    <div class="form-container log-in-container">
+      <form action="#">
+        <img class="labs-logo" src="./logo.png"/>
+        <h1>Login</h1>
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <a href="#">Forgot your password?</a>
+        <div class="captcha-checkbox">
+          <div class="spinner">
+            <label>
+              <input type="checkbox" onclick="startCaptcha()">
+              <span class="checkmark"><span>&nbsp;</span></span>
+            </label>
+          </div>
+          <div class="text">
+            I'm not a robot
+          </div>
+          <div class="logo">
+            <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" />
+            <p>reCAPTCHA</p>
+            <small>Privacy - Terms</small>
+          </div>
+        </div>
+        <button class="login-button" onclick="refreshPage()">Login</button>
+      </form>
+
+    </div>
+  </div>
+  <div class="captcha-wrap">
+    <div class="captcha-title">
+      <p class="captcha-instructions-a">Select all images with</p>
+      <h2 class="captcha-class">cars</h2>
+      <p class="captcha-instructions-b">
+        Click verify once there are none left
+      </p>
+    </div>
+    <div class="captcha"></div>
+    <div class="captcha-actions">
+      <div class="captcha-icons">
+        <i class="material-icons">refresh</i>
+        <i class="material-icons">headset</i>
+        <i class="material-icons">info</i>
+      </div>
+      <button type="button" class="submit-button" onclick="submitCaptcha()">VERIFY</button>
+    </div>
+</body>
+
+</html>
