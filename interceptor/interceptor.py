@@ -15,6 +15,7 @@ evil_model = ResNet18()
 def has_class_over_threshold(df):
     hcot = False
     intersected = set(df["name"].tolist()).intersection(class_names)
+
     if len(intersected) > 0:
         for idx, row in df[df["name"].isin(intersected)].iterrows():
             if row["confidence"] >= cfg["target_classes"][row["name"]]:
