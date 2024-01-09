@@ -33,7 +33,7 @@ services:
     image: 'moditm-interceptor:latest'
     volumes:
       - '${PWD}/log:/var/log'
-      - '${PWD}/weights:/weights'
+      - '${PWD}/config:/config'
     expose:
       - 5000
     networks:

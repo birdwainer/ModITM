@@ -17,7 +17,6 @@ def has_class_over_threshold(df):
     intersected = set(df["name"].tolist()).intersection(class_names)
     if len(intersected) > 0:
         for idx, row in df[df["name"].isin(intersected)].iterrows():
-            breakpoint()
             if row["confidence"] >= cfg["target_classes"][row["name"]]:
                 hcot = True
                 break
@@ -37,7 +36,7 @@ def obliterate_img(image):
 
 
 def read_config():
-    with open("config.yaml", "r") as cfg_file:
+    with open("/config/config.yaml", "r") as cfg_file:
         yaml = YAML(typ="safe")
         cfg = yaml.load(cfg_file)
     return cfg

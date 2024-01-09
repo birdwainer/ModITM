@@ -6,7 +6,7 @@ from torchvision.models import resnet18
 
 
 class ResNet18:
-    WEIGHTS_PATH = "/weights/best.pt"
+    WEIGHTS_PATH = "/config/weights/best.pt"
 
     CLASSES_KEY = {
         0: "plane",
