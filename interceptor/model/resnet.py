@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torchvision import transforms
 from torchvision.models import resnet18
 
 
@@ -26,7 +27,7 @@ class ResNet18:
             nn.ReLU(),
             nn.Dropout(0.2),
             nn.Linear(512, 10),
-            nn.LogSoftmax(dim=1),
+            nn.Softmax(dim=1),
         )
         self.model.load_state_dict(
             torch.load(
@@ -36,13 +37,22 @@ class ResNet18:
         )
         self.model.eval()
         self.classes_key = classes_key
+        self.transformations = transforms.Compose(
+            [
+                transforms.Normalize(
+                    [0.49118733, 0.48202792, 0.44637883],
+                    [0.24694054, 0.24337897, 0.26151666],
+                ),
+            ]
+        )
 
     def detect(self, img):
         with torch.no_grad():
+            img = self.transformations(img)
             result = self.model(img)
             return result
             # return self.classes_key[result.argmax(1).item()]
-        
+
 
 if __name__ == "__main__":
     import cv2
@@ -60,3 +70,4 @@ if __name__ == "__main__":
 
     # print(torch.exp(result))
     print(result.shape)
+    print(result)

@@ -9,7 +9,7 @@ import numpy as np
 from model import ResNet18
 from model import FakeModel
 
-evil_model = FakeModel()
+evil_model = ResNet18()
 
 
 def has_class_over_threshold(df):
