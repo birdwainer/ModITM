@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.nn as nn
+from torchvision import transforms
 from torchvision.models import resnet18
 
 
@@ -38,9 +39,18 @@ class ResNet18:
         )
         self.model.eval()
         self.classes_key = classes_key
+        self.transformations = transforms.Compose(
+            [
+                transforms.Normalize(
+                    [0.49118733, 0.48202792, 0.44637883],
+                    [0.24694054, 0.24337897, 0.26151666],
+                ),
+            ]
+        )
 
     def detect(self, img):
         with torch.no_grad():
+            img = self.transformations(img)
             result = self.model(img)
 
             # result = nn.softmax(dim=1)(result)
@@ -51,7 +61,7 @@ class ResNet18:
 
             # return result
             # return self.classes_key[result.argmax(1).item()]
-        
+
 
 if __name__ == "__main__":
     import cv2
@@ -69,3 +79,4 @@ if __name__ == "__main__":
 
     # print(torch.exp(result))
     print(result.shape)
+    print(result)
