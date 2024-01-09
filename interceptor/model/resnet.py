@@ -1,3 +1,5 @@
+import numpy as np
+import pands as pd
 import torch
 import torch.nn as nn
 from torchvision.models import resnet18
@@ -40,5 +42,5 @@ class ResNet18:
     def detect(self, img):
         with torch.no_grad():
             result = self.model(img)
-            
-            return self.classes_key[result.argmax(1).item()]
+            result = nn.softmax(dim=1)(result)
+            return pd.DataFrame(np.column_stack([list(self.classes_key.keys()), list(self.classes_key.values()), result.numpy()[0]]), columns=['classid','classname','confidence'])
