@@ -54,9 +54,18 @@ class ResNet18:
             result = self.model(img)
 
             # result = nn.softmax(dim=1)(result)
-            ret = pd.DataFrame(np.column_stack([list(self.classes_key.keys()), list(self.classes_key.values()), result.numpy()[0]]), columns=['id','name','confidence'])
-            ret['id'] = pd.to_numeric(ret['id'])
-            ret['confidence'] = pd.to_numeric(ret['confidence'])
+            ret = pd.DataFrame(
+                np.column_stack(
+                    [
+                        list(self.classes_key.keys()),
+                        list(self.classes_key.values()),
+                        result.numpy()[0],
+                    ]
+                ),
+                columns=["id", "name", "confidence"],
+            )
+            ret["id"] = pd.to_numeric(ret["id"])
+            ret["confidence"] = pd.to_numeric(ret["confidence"])
             return ret
 
             # return result

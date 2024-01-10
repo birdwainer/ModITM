@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl gcc git g+
   poetry install --no-root && \
   apt-get purge -y gcc g++ && apt -y autoremove --purge && rm -rf /var/cache/* /root/.cache/*
 
-HEALTHCHECK CMD curl --fail http://localhost/image/1 || exit 1
+HEALTHCHECK CMD curl --fail http://localhost/image || exit 1
 
 # nosemgrep:github.workflows.config.missing-user
 CMD poetry run python server.py

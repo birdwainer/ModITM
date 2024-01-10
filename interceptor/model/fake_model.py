@@ -30,15 +30,24 @@ class FakeModel:
 
     def detect(self, *args, **kwargs):
         result = random.choice(self.fake_tensors)
-        
-        ret = pd.DataFrame(np.column_stack([list(self.classes_key.keys()), list(self.classes_key.values()), result.numpy()[0]]), columns=['id','name','confidence'])
-        ret['id'] = pd.to_numeric(ret['id'])
-        ret['confidence'] = pd.to_numeric(ret['confidence'])
+
+        ret = pd.DataFrame(
+            np.column_stack(
+                [
+                    list(self.classes_key.keys()),
+                    list(self.classes_key.values()),
+                    result.numpy()[0],
+                ]
+            ),
+            columns=["id", "name", "confidence"],
+        )
+        ret["id"] = pd.to_numeric(ret["id"])
+        ret["confidence"] = pd.to_numeric(ret["confidence"])
         return ret
 
 
 if __name__ == "__main__":
-    img = torch.randn((1,3,32,32))
+    img = torch.randn((1, 3, 32, 32))
     model = FakeModel()
     result = model.detect(img)
     print(result.shape)

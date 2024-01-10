@@ -1,4 +1,11 @@
 target_classes:
-  "car": 0.4
-  "plane": 1.5
-  "ship": 1.5
+  "bird": 0.5
+  "cat": 0.25
+  "dog": 0.25
+  "horse": 0.25
+  "sheep": 0.25
+  "cow": 0.25
+  "elephant": 0.5
+  "bear": 0.5
+  "zebra": 0.5
+  "giraffe": 0.5
