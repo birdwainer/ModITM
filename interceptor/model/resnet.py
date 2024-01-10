@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.nn as nn
-from torchvision import transforms
 from torchvision.models import resnet18
 
 
@@ -23,14 +22,11 @@ class ResNet18:
     }
 
     def __init__(self, weights_path=WEIGHTS_PATH, classes_key=CLASSES_KEY):
-        self.model = resnet18()
-        self.model.fc = nn.Sequential(
-            nn.Linear(self.model.fc.in_features, 512),
-            nn.ReLU(),
-            nn.Dropout(0.2),
-            nn.Linear(512, 10),
-            nn.Softmax(dim=1),
+        self.model = resnet18(weights=None, num_classes=10)
+        self.model.conv1 = nn.Conv2d(
+            3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
         )
+        self.model.maxpool = nn.Identity()
         self.model.load_state_dict(
             torch.load(
                 weights_path,
@@ -39,24 +35,25 @@ class ResNet18:
         )
         self.model.eval()
         self.classes_key = classes_key
-        self.transformations = transforms.Compose(
-            [
-                transforms.Normalize(
-                    [0.49118733, 0.48202792, 0.44637883],
-                    [0.24694054, 0.24337897, 0.26151666],
-                ),
-            ]
-        )
 
     def detect(self, img):
         with torch.no_grad():
-            img = self.transformations(img)
             result = self.model(img)
-
+            result = nn.functional.softmax(result, dim=1)
             # result = nn.softmax(dim=1)(result)
-            ret = pd.DataFrame(np.column_stack([list(self.classes_key.keys()), list(self.classes_key.values()), result.numpy()[0]]), columns=['id','name','confidence'])
-            ret['id'] = pd.to_numeric(ret['id'])
-            ret['confidence'] = pd.to_numeric(ret['confidence'])
+            ret = pd.DataFrame(
+                np.column_stack(
+                    [
+                        list(self.classes_key.keys()),
+                        list(self.classes_key.values()),
+                        result.numpy()[0],
+                    ]
+                ),
+                columns=["id", "name", "confidence"],
+            )
+            ret["id"] = pd.to_numeric(ret["id"])
+            ret["confidence"] = pd.to_numeric(ret["confidence"])
+            print(ret)
             return ret
 
             # return result
