@@ -20,6 +20,7 @@ def has_class_over_threshold(df):
     if len(intersected) > 0:
         for idx, row in df[df["name"].isin(intersected)].iterrows():
             if row["confidence"] >= cfg["target_classes"][row["name"]]:
+                print(f'Determination: {row["name"]} with confidence: {row["confidence"]}')
                 hcot = True
                 bboxes.append((row["xmin"],row["xmax"],row["ymin"],row["ymax"]))
 
@@ -79,4 +80,4 @@ def moditm():
 cfg = read_config()
 class_names = set(cfg["target_classes"].keys())
 
-run(host="0.0.0.0", port=5000, debug=True)
+run(host="0.0.0.0", port=5000, debug=True, quiet=True)
