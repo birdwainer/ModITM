@@ -26,7 +26,6 @@ services:
     container_name: interceptor
     hostname: evil_model
     restart: always
-    platform: linux/amd64
     build:
       context: interceptor
       dockerfile: Dockerfile
