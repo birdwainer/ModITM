@@ -35,6 +35,7 @@ def obliterate_img(image):
     image = np.zeros((32, 32, 3), np.uint8)
     return cv2.imencode(".jpg", image)[1].tostring()
 
+
 def replace_img(image):
     with open("images/click.png", "rb") as img_file:
         image_bytes = img_file.read()
