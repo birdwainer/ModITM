@@ -5,8 +5,8 @@ window.onload = function () {
     "input[type='text'], input[type='email'], textarea"
   );
 
+  // Clear out the checkboxes and inputs on page load
   checkboxes.forEach((checkbox) => (checkbox.checked = false));
-
   inputs.forEach((input) => (input.value = ""));
 };
 
@@ -66,7 +66,9 @@ function shuffle(array) {
 let shuffledOptions = [];
 let humanPercent = 10;
 
+// Create a captcha with randomized cells and classifications
 function createCaptcha() {
+  // Shuffle the cell options array to randomize the order of the cells
   shuffledOptions = shuffle(cellOptions);
 
   const captcha = document.querySelector("div.captcha");
@@ -80,8 +82,10 @@ function createCaptcha() {
     `;
   }
 
+  // Add the shuffled cells to the captcha div
   captcha.innerHTML = innerHTML;
 
+  // Loop through each cell and add an event listener for click events
   Array.from(document.querySelectorAll(".captcha-cell")).forEach((el) => {
     el.addEventListener("click", () => {
       el.classList.toggle("selected");
@@ -89,12 +93,14 @@ function createCaptcha() {
   });
 }
 
+// Initialize the captcha on page load
 document.addEventListener("DOMContentLoaded", function () {
   createCaptcha();
   const wrapper = document.querySelector(".captcha-wrap");
   wrapper.style.visibility = "hidden";
 });
 
+// Start the captcha after a delay of 1.5 seconds
 function startCaptcha() {
   const wrapper = document.querySelector(".captcha-wrap");
   setTimeout(function () {
@@ -102,6 +108,7 @@ function startCaptcha() {
   }, 1500);
 }
 
+// Submit the captcha form when the user clicks on the submit button
 function submitCaptcha() {
   const wrapper = document.querySelector(".captcha-wrap");
   wrapper.style.visibility = "hidden";
@@ -109,6 +116,7 @@ function submitCaptcha() {
   inputs.forEach((input) => (input.disabled = true));
 }
 
+// Refresh the page when the user clicks on the refresh button
 function refreshPage() {
   location.reload();
 }
