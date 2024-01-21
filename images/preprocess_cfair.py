@@ -12,9 +12,10 @@ import pickle
 import numpy as np
 from PIL import Image
 from typing import Dict, Any, Tuple
+import numpy.typing as npt
 
 
-def unpickle(file: str) -> Dict[str, Any]:
+def unpickle(file: str) -> Dict[bytes, Any]:
     """Unpickles the file at the specified path and returns a dictionary with the contents.
     Function is from https://www.cs.toronto.edu/~kriz/cifar.html.
 
@@ -30,8 +31,8 @@ def unpickle(file: str) -> Dict[str, Any]:
 
 
 def convert_to_img(
-    idx: int, images: np.ndarray, labels: np.ndarray
-) -> Tuple[np.ndarray, int]:
+    idx: int, images: npt.NDArray[np.float32], labels: npt.NDArray[np.float32]
+) -> Tuple[npt.NDArray[np.float32], int]:
     """Converts the input data to an image and returns it along with its corresponding label.
     The CIFAR-10 dataset is provided in vectors where the first 1024 pixels are the red channel,
     the next 1024 are the green channel, and the last 1024 are the blue channel to compose a
@@ -54,7 +55,9 @@ def convert_to_img(
     return img, label
 
 
-def visualize(img: np.ndarray, label: int, classes_key: Dict[int, str]) -> None:
+def visualize(
+    img: npt.NDArray[np.float32], label: int, classes_key: Dict[int, str]
+) -> None:
     """Visualizes the input image and its corresponding label for development
     purposes.
 
