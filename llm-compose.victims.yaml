@@ -1,0 +1,84 @@
+version: '3.7'
+services:
+  proxy:
+    restart: always
+    image: nginx:latest
+    container_name: code_proxy
+    volumes:
+      - '${PWD}/llm_proxy/nginx.conf:/etc/nginx/nginx.conf'
+    ports:
+      - 11435:11435
+    healthcheck:
+      test: curl --fail http://localhost:11435/api/tags || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
+    networks:
+      llm:
+        ipv4_address: 192.168.2.20
+    depends_on:
+      codellama:
+        condition: service_healthy
+
+  nano-bots:
+    image: nano-bots
+    container_name: nano-bots-api
+    environment:
+      ENVIRONMENT: production
+      PORT: 3048
+
+      RUN_DANGEROUSLY_AS_SUDO: "false"
+      RVM: "false"
+
+      FORCE_SANDBOXED: "true"
+      ALLOW_CARTRIDGES_PATH_HEADER: "true"
+
+      NANO_BOTS_ENCRYPTION_PASSWORD: UNSAFE
+      NANO_BOTS_END_USER: your-user
+      NANO_BOTS_CARTRIDGES_PATH: /cartridges
+      # NANO_BOTS_STATE_PATH=/state
+      NANO_BOTS_RACK_ATTACK: "false"
+      NANO_BOTS_NEW_RELIC: "false"
+Hell
+      OLLAMA_API_ADDRESS: http://192.168.2.221:11434
+    ports:
+      - 3048:3048
+    volumes:
+      - ${PWD}/cartridges:/cartridges
+    networks:
+      llm:
+        ipv4_address: 192.168.2.24
+
+  codellama:
+    container_name: codellama
+    hostname: codellama
+    restart: always
+    build:
+      context: codellama
+      dockerfile: Dockerfile
+    image: 'moditm-llm-codellama:latest'
+    expose:
+      - 11434
+    volumes:
+      - '${PWD}/ollama:/root/.ollama'
+    command: serve 
+    healthcheck:
+      test: curl --fail http://localhost:11434/api/tags || exit 1
+      interval: 30s
+      retries: 2
+      start_period: 20s
+      timeout: 2s
+    networks:
+      llm:
+        ipv4_address: 192.168.2.221
+    
+    
+networks:
+  llm:
+    name: llm
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24
+          gateway: 192.168.2.1

@@ -167,3 +167,6 @@ log/
 *.tar
 *.tar.gz
 .DS_Store
+
+ollama
+images

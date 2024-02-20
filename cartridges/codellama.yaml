@@ -1,0 +1,19 @@
+---
+meta:
+  symbol: 🦙
+  name: Code Llama
+  author: Birdwainer
+  version: 0.0.1
+  license: Apache-2.0
+  description: It's the Winamp of code!
+
+behaviors:
+  interaction:
+    directive: You are a helpful assistant.
+
+provider:
+  id: ollama
+  credentials:
+    address: ENV/OLLAMA_API_ADDRESS
+  settings:
+    model: codellama:7b
