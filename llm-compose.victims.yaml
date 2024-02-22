@@ -22,7 +22,7 @@ services:
         condition: service_healthy
 
   nano-bots:
-    image: nano-bots
+    image: rashleyiqt/nano-bots-api
     container_name: nano-bots-api
     environment:
       ENVIRONMENT: production
@@ -40,12 +40,11 @@ services:
       # NANO_BOTS_STATE_PATH=/state
       NANO_BOTS_RACK_ATTACK: "false"
       NANO_BOTS_NEW_RELIC: "false"
-Hell
       OLLAMA_API_ADDRESS: http://192.168.2.221:11434
     ports:
       - 3048:3048
     volumes:
-      - ${PWD}/cartridges:/cartridges
+      - ${HOME}/.local/share/nano-bots/cartridges:/cartridges
     networks:
       llm:
         ipv4_address: 192.168.2.24
