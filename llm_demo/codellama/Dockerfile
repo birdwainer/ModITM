@@ -1,6 +1,6 @@
-FROM ollama/ollama:latest
+FROM ollama/ollama:0.1.27
 
-RUN apt-get install -y curl
+RUN apt update && apt-get install -y curl tcpdump iproute2
 
 COPY startup.sh .
 
