@@ -31,7 +31,9 @@ services:
       dockerfile: Dockerfile
     image: 'moditm-code_interceptor:latest'
     environment:
-      OLLAMA_URL: badllama
+      ORIGINAL_OLLAMA_HOST: '192.168.2.221'
+      ORIGINAL_OLLAMA_PORT: 11434
+      OLLAMA_HOST: '192.168.2.64'
       OLLAMA_PORT: 11434
     volumes:
       - '${PWD}/log:/var/log'
@@ -70,7 +72,7 @@ services:
   evil_puller:
     image: 'curlimages/curl:8.6.0'
     environment:
-      OLLAMA_HOST: '192.168.2.64'
+      OLLAMA_HOST: 'badllama'
       OLLAMA_PORT: 11434
     volumes:
       - '${PWD}/attackers/model_puller:/model_puller'
