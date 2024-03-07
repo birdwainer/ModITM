@@ -8,7 +8,10 @@ COPY . /code_interceptor
 WORKDIR /code_interceptor
 
 ENV PATH="${PATH}:/root/.local/bin"
-RUN apt-get update && apt-get install -y --no-install-recommends curl && \
+RUN apt-get update && apt-get install -y --no-install-recommends curl \ 
+  tcpdump \
+  iptables \
+  dsniff && \
   curl -sSL https://install.python-poetry.org | python3 - && \
   poetry config virtualenvs.create false && \
   poetry install --no-root && \
@@ -17,4 +20,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl && \
 HEALTHCHECK CMD curl --fail http://localhost:11434/health || exit 1
 
 # nosemgrep:github.workflows.config.missing-user
-CMD poetry run python code_interceptor.py
+ENTRYPOINT ["./startup.sh"]

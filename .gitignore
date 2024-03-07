@@ -171,3 +171,5 @@ log/
 ollama
 images
 badllama
+pcaps
+*.pcapng
