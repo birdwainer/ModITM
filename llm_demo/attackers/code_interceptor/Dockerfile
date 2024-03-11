@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl \
   poetry install --no-root && \
   apt-get purge -y gcc g++ && apt -y autoremove --purge && rm -rf /var/cache/* /root/.cache/*
 
-HEALTHCHECK CMD curl --fail http://localhost:11434/health || exit 1
+HEALTHCHECK CMD curl -v --fail http://localhost:11434/health || exit 1
 
 # nosemgrep:github.workflows.config.missing-user
 ENTRYPOINT ["./startup.sh"]

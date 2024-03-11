@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   nano-bots:
-    image: rashleyiqt/nano-bots-api-debug
+    image: rashleyiqt/nano-bots-api-debug:latest
     build:
       context: nano-bots-api-debug
       dockerfile: Dockerfile
@@ -19,15 +19,16 @@ services:
       NANO_BOTS_ENCRYPTION_PASSWORD: UNSAFE
       NANO_BOTS_END_USER: your-user
       NANO_BOTS_CARTRIDGES_PATH: /cartridges
-      # NANO_BOTS_STATE_PATH=/state
+      NANO_BOTS_STATE_PATH: /state
       NANO_BOTS_RACK_ATTACK: "false"
       NANO_BOTS_NEW_RELIC: "false"
-      OLLAMA_API_ADDRESS: http://192.168.2.16:11434
+      OLLAMA_API_ADDRESS: http://192.168.2.221:11434
     ports:
       - 3048:3048
     volumes:
-      - ${HOME}/.local/share/nano-bots/cartridges:/cartridges
-      - ${PWD}/pcaps:/pcaps
+      - '${HOME}/.local/share/nano-bots/cartridges:/cartridges'
+      - '${PWD}/pcaps:/pcaps'
+      - '${PWD}/state:/state'
     networks:
       llm:
         ipv4_address: 192.168.2.24
@@ -47,6 +48,7 @@ services:
       - 11434
     volumes:
       - '${PWD}/ollama:/root/.ollama'
+      - '${PWD}/pcaps:/pcaps'
     command: serve 
     healthcheck:
       test: curl --fail http://localhost:11434/api/tags || exit 1
