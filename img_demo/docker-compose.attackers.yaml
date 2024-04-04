@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   attacker:
-    container_name: attacker
+    container_name: img_attacker
     hostname: attacker #evil_model
     restart: always
     build:
@@ -23,7 +23,7 @@ services:
         condition: service_healthy
         
   interceptor:
-    container_name: interceptor
+    container_name: img_interceptor
     hostname: evil_model
     restart: always
     build:
@@ -44,8 +44,4 @@ services:
 networks:
   internal:
     name: internal
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.1.0/24
-          gateway: 192.168.1.1
+    external: true

@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   server:
-    container_name: server
+    container_name: img_server
     hostname: server
     restart: always
     build:
@@ -16,7 +16,7 @@ services:
       internal:
         ipv4_address: 192.168.1.222
   victim:
-    container_name: victim
+    container_name: img_victim
     hostname: victim
     restart: always
     image: 'jlesage/firefox'
