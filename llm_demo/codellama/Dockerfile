@@ -1,4 +1,4 @@
-FROM ollama/ollama:0.1.27
+FROM ollama/ollama:latest
 
 RUN apt update && apt-get install -y curl tcpdump iproute2
 

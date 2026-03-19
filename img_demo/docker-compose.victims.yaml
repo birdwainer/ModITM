@@ -3,7 +3,7 @@ services:
   server:
     container_name: img_server
     hostname: server
-    restart: always
+    restart: no
     build:
       context: server
       dockerfile: Dockerfile
@@ -18,7 +18,7 @@ services:
   victim:
     container_name: img_victim
     hostname: victim
-    restart: always
+    restart: no
     image: 'jlesage/firefox'
     ports:
       - 5800:5800

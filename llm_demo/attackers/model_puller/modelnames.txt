@@ -1,2 +1,1 @@
-wizard-vicuna-uncensored:7b
 dolphin-mistral:latest

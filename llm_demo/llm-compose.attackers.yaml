@@ -33,7 +33,7 @@ services:
   code_interceptor:
     container_name: code_interceptor
     hostname: code_interceptor
-    restart: always
+    restart: no
     build:
       context: attackers/code_interceptor
       dockerfile: Dockerfile
@@ -62,7 +62,7 @@ services:
   badllama:
     container_name: badllama
     hostname: badllama
-    restart: always
+    restart: no
     build:
       context: codellama
       dockerfile: Dockerfile

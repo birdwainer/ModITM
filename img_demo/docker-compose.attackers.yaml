@@ -3,7 +3,7 @@ services:
   attacker:
     container_name: img_attacker
     hostname: attacker #evil_model
-    restart: always
+    restart: no
     build:
       context: attacker
       dockerfile: Dockerfile
@@ -25,7 +25,7 @@ services:
   interceptor:
     container_name: img_interceptor
     hostname: evil_model
-    restart: always
+    restart: no
     build:
       context: interceptor
       dockerfile: Dockerfile

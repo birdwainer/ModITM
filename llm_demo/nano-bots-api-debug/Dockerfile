@@ -1,4 +1,4 @@
-FROM rashleyiqt/nano-bots-api:1.6.0
+FROM rashleyiqt/nano-bots-api:latest
 
 USER root
 RUN apt install -y tcpdump vim

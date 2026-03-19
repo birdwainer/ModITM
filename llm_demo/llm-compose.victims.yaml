@@ -26,7 +26,7 @@ services:
     ports:
       - 3048:3048
     volumes:
-      - '${HOME}/.local/share/nano-bots/cartridges:/cartridges'
+      - '${PWD}/cartridges:/cartridges'
       - '${PWD}/pcaps:/pcaps'
       - '${PWD}/state:/state'
     networks:
@@ -39,13 +39,15 @@ services:
   codellama:
     container_name: codellama
     hostname: codellama
-    restart: always
+    restart: no
     build:
       context: codellama
       dockerfile: Dockerfile
     image: 'moditm-llm-codellama:latest'
     expose:
       - 11434
+    ports:
+      - 11434:11434
     volumes:
       - '${PWD}/ollama:/root/.ollama'
       - '${PWD}/pcaps:/pcaps'
